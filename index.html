@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, user-scalable=no" />
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src='lib/quintus.js'></script>
+        <script src='lib/quintus_sprites.js'></script>
+        <script src='lib/quintus_scenes.js'></script>
+        <script src='lib/quintus_input.js'></script>
+        <script src='lib/quintus_anim.js'></script>
+        <script src='lib/quintus_2d.js'></script>
+        <script src='lib/quintus_touch.js'></script>
+        <script src='lib/quintus_ui.js'></script>
+        <script src='lib/quintus_audio.js'></script>
+        <script src='scripts/racemath_characters.js'></script>
+        <script src='scripts/racemath_UI.js'></script>
+    </head>
+    <body style="background-color: black;">
+        <script>
+        window.addEventListener("load",function() {
+          var Q = window.Q = Quintus({development: true} )
+            .include("Sprites, Scenes, 2D, Input, Touch, UI, RacemathCharacter, RacemathUI, Audio")
+            .setup({
+                width: 620,
+                height: 880                
+            }).touch();
+
+            Q.enableSound();
+
+            Q.SPRITE_NONE = 0;
+            Q.SPRITE_RACER = 1;
+            Q.SPRITE_OTHER = 2;
+
+          Q.scene("level1", function(stage){
+            var collisionLayer = new Q.TileLayer({dataAsset: "level_collision.json", sheet: "tiles", type: Q.SPRITE_OTHER});
+            var backgroundLayer = new Q.TileLayer({dataAsset: "level_background.json", sheet: "tiles", type: Q.SPRITE_NONE});
+
+            stage.collisionLayer(collisionLayer);
+            stage.insert(backgroundLayer);
+
+            // var sprite = new Q.Sprite({
+            //     x:50,
+            //     y: 50,
+            //     sheet: "player",
+            //     type: Q.SPRITE_RACER,
+            //     collisionMask: Q.SPRITE_OTHER
+            // });
+            // sprite.add("2d");
+
+            // var sprite2 = new Q.Sprite({
+            //     x: 100,
+            //     y: 70,
+            //     sheet: "bluerival",
+            //     type: Q.SPRITE_RACER,
+            //     collisionMask: Q.SPRITE_OTHER
+            // });
+            //sprite2.add("2d");
+
+            //stage.insert(sprite);
+            //stage.insert(sprite2);
+
+            //sprite.p.vx = 100;
+
+            // var player = new Q.Player({
+            //     x: 0,
+            //     y: 120
+            // })
+
+            // player.p.vx = 40;
+
+            // var princess = new Q.Princess({
+            //     x: 500,
+            //     y: 120
+            // })
+
+            // var bluerival = new Q.Rival({
+            //     x: 0,
+            //     y: 120,
+            //     sheet: "bluerival"
+            // });
+
+            // var greenrival = new Q.Rival({
+            //     x: 0,
+            //     y: 120,
+            //     sheet: "greenrival"
+            // });
+
+            // var purplerival = new Q.Rival({
+            //     x: 0,
+            //     y: 120,
+            //     sheet: "purplerival"
+            // });
+
+            // stage.insert(player);
+            // stage.insert(princess);
+            // stage.insert(bluerival);
+            // stage.insert(greenrival);
+            // stage.insert(purplerival);
+
+            stage.loadAssets(stage.options.elements);
+            var player = Q("Player", 0).first();
+
+            Q.state.set(stage.options.mathOperations);
+
+            stage.add("viewport").follow(player, {x:true, y:true}, {minX: 0, maxX: backgroundLayer.p.w, minY: 0, maxY: backgroundLayer.p.h});
+
+          });    
+          
+          Q.scene("game_over", function(stage){
+            var box = new Q.UI.Container({
+                x: Q.width/2,
+                y: Q.height/4,
+                fill: "rgba(0,0,0,0.5)"
+            });
+
+            stage.insert(box);
+
+            var buttonPA = new Q.UI.Button({
+                x: 0,
+                y: 0,
+                label: "Play Again",
+                fill: "#CCCCCC"
+            });
+
+            box.insert(buttonPA);
+
+            var label = new Q.UI.Text({
+                x: 10,
+                y: -10 - buttonPA.p.h,
+                label: stage.options.label,
+                color: "#FFFFFF"
+            });
+
+            box.insert(label);
+
+            box.fit(20);
+
+            buttonPA.on("click", function(){
+                console.log("click");
+                Q.stageScene("level1", 0, Q.stages[0].options);
+                stage.stop();
+            });
+
+          });
+
+          Q.load("sprites.png, sprites.json, level_collision.json, level_background.json, tiles.png, boom.mp3, win.mp3", function() {
+                console.log('loaded game assets');
+                console.log('now .. stage a scene');
+                Q.sheet("tiles", "tiles.png", {tilew: 32, tileh: 32});
+                Q.compileSheets("sprites.png", "sprites.json");
+
+                Q.stageScene("level1", 0, {
+                    elements: [
+                        ['Rival', {x: 0, y: 130, sheet: "bluerival"}],
+                        ['Rival', {x: 0, y: 130, sheet: "greenrival"}],
+                        ['Rival', {x: 0, y: 130, sheet: "purplerival"}],
+                        ['Princess', {x: 2480, y: 130, sheet: "girl"}],
+                        ['Player', {x: 0, y: 130, vx: 50}],
+
+                    ],
+                    mathOperations: {operations_min: 0, operations_max: 10}
+                });
+                Q.stageScene('ui', 1);
+          });
+        });
+        </script>
+    </body>
+</html>
