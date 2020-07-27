@@ -35,12 +35,12 @@ Quintus.RacemathCharacter = function(Q){
                 //console.log(collision.obj);
                 if(collision.obj.isA("Player")){
                     //console.log("You won");
-                    Q.stageScene("game_over", 1, {label: "You Won !"});
+                    Q.stageScene("game_over", 1, {label: "Minh Loves Chau !"});
                     this.destroy();
                 }
                 else if (collision.obj.isA("Rival")){
                     //console.log("You lose");
-                    Q.stageScene("game_over", 1, {label: "Game Over !"});
+                    Q.stageScene("game_over", 1, {label: "Give me one more chance !"});
                     this.destroy();
                 }
             });
