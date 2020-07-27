@@ -22,8 +22,8 @@
           var Q = window.Q = Quintus({development: true} )
             .include("Sprites, Scenes, 2D, Input, Touch, UI, RacemathCharacter, RacemathUI, Audio")
             .setup({
-                width: 620,
-                height: 880                
+                width: 320,
+                height: 480                
             }).touch();
 
             Q.enableSound();
@@ -110,7 +110,7 @@
           Q.scene("game_over", function(stage){
             var box = new Q.UI.Container({
                 x: Q.width/2,
-                y: Q.height/4,
+                y: Q.height/2,
                 fill: "rgba(0,0,0,0.5)"
             });
 
@@ -139,6 +139,7 @@
             buttonPA.on("click", function(){
                 console.log("click");
                 Q.stageScene("level1", 0, Q.stages[0].options);
+                Q.stageScene("ui",1);
                 stage.stop();
             });
 

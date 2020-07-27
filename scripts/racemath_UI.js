@@ -52,7 +52,7 @@ Quintus.RacemathUI = function(Q){
     Q.scene("ui", function(stage){
         var qContainer = stage.insert(new Q.UI.Container({
             fill: "gray",
-            x: 401,
+            x: 221,
             y: 325,
             border: 2,
             shadow: 3,
@@ -66,7 +66,7 @@ Quintus.RacemathUI = function(Q){
 
         var answerBox = stage.insert(new Q.UI.Container({
             fill: "#438700",
-            x: 401,
+            x: 221,
             y: 385,
             border: 2,
             shadow: 3,
@@ -85,7 +85,7 @@ Quintus.RacemathUI = function(Q){
         var answerButton = stage.insert(new Q.UI.Button({
             fill: "white",
             label: "Enter",
-            x: 401,
+            x: 221,
             y: 445,
             border: 2,
             shadow: 3,
@@ -115,7 +115,7 @@ Quintus.RacemathUI = function(Q){
                 new Q.NumberButton({
                     label: i,
                     y: 275 + Math.ceil(i/3)*45,
-                    x: 180 + parseInt((i + 2) % 3)*45,
+                    x: 30 + parseInt((i + 2) % 3)*45,
                     answerLabel: answerLabel
                 })
             );
@@ -125,7 +125,7 @@ Quintus.RacemathUI = function(Q){
             new Q.NumberButton({
                 label: '0',
                 y: 275 + 4*45,
-                x: 180+45,
+                x: 30+45,
                 answerLabel: answerLabel
             })
         );
